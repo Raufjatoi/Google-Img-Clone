@@ -6,5 +6,4 @@ Features:- Text-to-image generation
 ## Getting Started
 ```
 npm run dev
-yarn run dev 
 ```
