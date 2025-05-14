@@ -6,5 +6,4 @@ Features:- Text-to-image generation
 ## Getting Started
 ```npm install
 npm run dev
-
-# ImageFX Clone
+```   
