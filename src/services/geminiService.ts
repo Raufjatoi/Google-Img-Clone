@@ -5,7 +5,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 
 export async function generateImages(prompt: string, numImages = 4): Promise<string[]> {
   try {
-    // Use gemini-1.5-flash instead of the deprecated gemini-pro-vision
+    // Used gemini-1.5-flash as demo change it to image one 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     // Generate multiple images

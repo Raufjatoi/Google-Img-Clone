@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { ImageIcon, Grid2X2, Square } from 'lucide-react';
+import GenerationAnimation from './GenerationAnimation';
 
 const ImageGrid = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -57,8 +58,9 @@ const ImageGrid = () => {
     // Mobile view - single image
     return (
       <div className="flex flex-col">
-        <div className="w-full aspect-square mb-4">
+        <div className="w-full aspect-square mb-4 relative">
           <div className="h-full rounded-lg bg-zinc-900/80 flex items-center justify-center">
+            {isLoading && <GenerationAnimation isLoading={isLoading} />}
             {isLoading ? (
               <div className="w-8 h-8 border-4 border-gray-600 border-t-indigo-500 rounded-full animate-spin"></div>
             ) : images.length > 0 ? (
@@ -123,7 +125,8 @@ const ImageGrid = () => {
         
         {isGridView ? (
           // Grid view
-          <div className="grid grid-cols-2 gap-2 flex-grow">
+          <div className="grid grid-cols-2 gap-2 flex-grow relative">
+            {isLoading && <GenerationAnimation isLoading={isLoading} />}
             {images.length > 0 ? (
               images.map((image, index) => (
                 <div key={index} className="aspect-square overflow-hidden rounded-lg bg-zinc-900/80">
@@ -146,7 +149,8 @@ const ImageGrid = () => {
           </div>
         ) : (
           // Single image view
-          <div className="flex-grow">
+          <div className="flex-grow relative">
+            {isLoading && <GenerationAnimation isLoading={isLoading} />}
             {images.length > 0 ? (
               <div className="h-full rounded-lg bg-zinc-900/80 overflow-hidden">
                 <img 
@@ -189,11 +193,3 @@ const ImageGrid = () => {
 };
 
 export default ImageGrid;
-
-
-
-
-
-
-
-
