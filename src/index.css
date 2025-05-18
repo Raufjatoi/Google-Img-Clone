@@ -7,6 +7,7 @@
 
 @layer base {
   :root {
+    /* Dark theme variables (default) */
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
 
@@ -38,11 +39,45 @@
     --radius: 1rem;
   }
 
+  /* Light theme variables */
+  .light {
+    --background: 0 0% 98%;
+    --foreground: 0 0% 3.9%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 3.9%;
+
+    --popover: 0 0% 98%;
+    --popover-foreground: 0 0% 3.9%;
+
+    --primary: 252 87% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 5.9% 10%;
+  }
+
   * {
     @apply border-border;
   }
 
   body {
     @apply bg-background text-foreground font-inter antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 }
+
+

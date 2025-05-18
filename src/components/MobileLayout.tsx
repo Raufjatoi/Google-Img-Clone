@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './Header';
-import Navigation from './Navigation';
-import { ImageIcon } from 'lucide-react';
+import PromptSection from './PromptSection';
+import { ImageIcon, Settings as SettingsIcon } from 'lucide-react';
+import Settings from './Settings';
+import { useTheme } from '../providers/ThemeProvider';
+import GenerationAnimation from './GenerationAnimation';
 
 const MobileLayout = () => {
   const [prompt, setPrompt] = React.useState('');
   const [isGenerating, setIsGenerating] = React.useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [activeTab, setActiveTab] = useState('input');
 
   const handleGenerateImages = () => {
     setIsGenerating(true);
@@ -16,52 +21,73 @@ const MobileLayout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
       <Header />
       
       <div className="flex-grow px-4 pb-20">
-        <div className="w-full aspect-square mb-4">
-          <div className="h-full rounded-lg bg-zinc-900/80 flex items-center justify-center">
-            {isGenerating ? (
-              <div className="w-8 h-8 border-4 border-gray-600 border-t-indigo-500 rounded-full animate-spin"></div>
-            ) : null}
-          </div>
-        </div>
-        
-        <div className="bg-zinc-900 rounded-full w-full py-2 px-4 flex items-center justify-between mb-4">
-          <button className="text-gray-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <span className="text-white text-sm">0 / 0</span>
-          <button className="text-gray-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-        </div>
-        
-        <div className="bg-zinc-900/80 rounded-lg p-4">
-          <textarea 
-            className="w-full bg-transparent text-gray-300 text-lg resize-none outline-none"
-            placeholder="High-angle view of a collection of antique, porcelain teacups and saucers in a dusty antique shop, fujifilm x100f, f8, 1/125s, iso 200"
-            rows={3}
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-          ></textarea>
-          <div className="flex justify-end">
-            <button className="bg-zinc-800 text-white text-xs px-2 py-1 rounded">tab</button>
-          </div>
-        </div>
+        {activeTab === 'input' ? (
+          <>
+            <div className="w-full aspect-square mb-4 relative">
+              <div className="h-full rounded-lg bg-secondary flex items-center justify-center">
+                {isGenerating && (
+                  <div className="absolute inset-0 z-0">
+                    <GenerationAnimation isLoading={isGenerating} />
+                  </div>
+                )}
+                {isGenerating ? (
+                  <div className="w-8 h-8 border-4 border-gray-600 border-t-indigo-500 rounded-full animate-spin z-10"></div>
+                ) : null}
+              </div>
+            </div>
+            
+            {/* Add PromptSection here */}
+            <div className="bg-secondary rounded-lg p-4 mb-4">
+              <textarea 
+                className="w-full bg-transparent text-foreground text-lg resize-none outline-none"
+                placeholder="A futuristic city with flying cars and neon lights, cyberpunk style"
+                rows={4}
+              ></textarea>
+              
+              <div className="mt-4">
+                <h3 className="text-muted-foreground text-sm mb-2">Style suggestions</h3>
+                <div className="flex flex-wrap gap-2">
+                  {['35mm film', 'minimal', 'sketchy', 'handmade'].map((style, index) => (
+                    <button
+                      key={index}
+                      className="px-3 py-1 rounded-full text-xs bg-muted text-muted-foreground hover:bg-muted/80"
+                    >
+                      {style}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </>
+        ) : (
+          <Settings isOpen={true} />
+        )}
       </div>
       
-      <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-zinc-800">
+      <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border transition-colors duration-300">
         <div className="flex justify-between px-8 py-4">
-          <button className="text-indigo-400 text-sm border-b-2 border-indigo-400 pb-1">
+          <button 
+            className={`text-sm pb-1 transition-all duration-200 ${
+              activeTab === 'input' 
+                ? 'text-primary border-b-2 border-primary' 
+                : 'text-foreground hover:text-primary/80'
+            }`}
+            onClick={() => setActiveTab('input')}
+          >
             Input
           </button>
-          <button className="text-white text-sm">
+          <button 
+            className={`text-sm pb-1 transition-all duration-200 ${
+              activeTab === 'settings' 
+                ? 'text-primary border-b-2 border-primary' 
+                : 'text-foreground hover:text-primary/80'
+            }`}
+            onClick={() => setActiveTab('settings')}
+          >
             Settings
           </button>
         </div>
@@ -69,7 +95,7 @@ const MobileLayout = () => {
       
       <div className="fixed bottom-16 right-6">
         <button 
-          className="bg-indigo-400 rounded-full p-3"
+          className="bg-primary rounded-full p-3 transition-all duration-200 hover:bg-primary/90 hover:shadow-lg active:scale-95"
           onClick={handleGenerateImages}
           disabled={isGenerating}
         >
@@ -81,3 +107,4 @@ const MobileLayout = () => {
 };
 
 export default MobileLayout;
+

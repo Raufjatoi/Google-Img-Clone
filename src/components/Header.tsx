@@ -10,64 +10,37 @@ const Header = () => {
 
   return (
     <>
-      {isMobile ? (
-        <header className="flex justify-between items-center py-4 px-4">
-          <div className="flex items-center">
-            <h1 className="text-white text-xl font-medium">ImageFX</h1>
-            <ChevronDown className="w-5 h-5 text-gray-400 ml-1" />
+      <header className={`flex justify-between items-center ${isMobile ? 'py-4 px-4' : 'py-4 px-6'}`}>
+        <div className="flex items-center">
+          <h1 className="text-foreground text-xl font-medium">ImageFX</h1>
+          <ChevronDown className="w-5 h-5 text-muted-foreground ml-1" />
+        </div>
+        
+        <div className="flex items-center">
+          <button 
+            className="mx-4"
+            onClick={() => setShowAboutDialog(true)}
+            aria-label="About ImageFX"
+          >
+            <HelpCircle className="w-6 h-6 text-foreground" />
+          </button>
+          <button className="mx-4">
+            <MoreVertical className="w-6 h-6 text-foreground" />
+          </button>
+          <div className="w-8 h-8 rounded-full overflow-hidden">
+            <img 
+              src="/placeholder.svg" 
+              alt="User avatar"
+              className="w-full h-full object-cover" 
+            />
           </div>
-          
-          <div className="flex items-center">
-            <button 
-              className="mx-4"
-              onClick={() => setShowAboutDialog(true)}
-              aria-label="About ImageFX"
-            >
-              <HelpCircle className="w-6 h-6 text-white" />
-            </button>
-            <button className="mx-4">
-              <MoreVertical className="w-6 h-6 text-white" />
-            </button>
-            <div className="w-8 h-8 rounded-full overflow-hidden">
-              <img 
-                src="/placeholder.svg" 
-                alt="User avatar"
-                className="w-full h-full object-cover" 
-              />
-            </div>
-          </div>
-        </header>
-      ) : (
-        <header className="flex justify-between items-center py-4 px-6">
-          <div className="flex items-center">
-            <h1 className="text-white text-2xl font-medium">ImageFX</h1>
-            <ChevronDown className="w-5 h-5 text-gray-400 ml-1" />
-          </div>
-          
-          <div className="flex items-center">
-            <button 
-              className="mr-4 flex items-center justify-center"
-              onClick={() => setShowAboutDialog(true)}
-              aria-label="About ImageFX"
-            >
-              <HelpCircle className="w-6 h-6 text-white" />
-            </button>
-            <MoreVertical className="w-6 h-6 text-white mr-4" />
-            <div className="w-10 h-10 rounded-full bg-purple-500 overflow-hidden">
-              <img 
-                src="/placeholder.svg" 
-                alt="User avatar"
-                className="w-full h-full object-cover" 
-              />
-            </div>
-          </div>
-        </header>
-      )}
+        </div>
+      </header>
 
       <Dialog open={showAboutDialog} onOpenChange={setShowAboutDialog}>
-        <DialogContent className="bg-[#1e1e3a] text-white border-none max-w-md">
+        <DialogContent className="bg-background text-foreground border-border max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-center text-xl text-indigo-300">About ImageFX</DialogTitle>
+            <DialogTitle className="text-center text-xl text-primary">About ImageFX</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 text-sm">
             <p>
@@ -79,7 +52,7 @@ const Header = () => {
           </div>
           <div className="flex justify-end mt-4">
             <button 
-              className="text-indigo-300 hover:text-indigo-200"
+              className="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors"
               onClick={() => setShowAboutDialog(false)}
             >
               Got it
@@ -92,6 +65,7 @@ const Header = () => {
 };
 
 export default Header;
+
 
 
 

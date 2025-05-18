@@ -60,7 +60,11 @@ const ImageGrid = () => {
       <div className="flex flex-col">
         <div className="w-full aspect-square mb-4 relative">
           <div className="h-full rounded-lg bg-zinc-900/80 flex items-center justify-center">
-            {isLoading && <GenerationAnimation isLoading={isLoading} />}
+            {isLoading && (
+              <div className="absolute inset-0 z-0">
+                <GenerationAnimation isLoading={isLoading} />
+              </div>
+            )}
             {isLoading ? (
               <div className="w-8 h-8 border-4 border-gray-600 border-t-indigo-500 rounded-full animate-spin"></div>
             ) : images.length > 0 ? (
@@ -107,14 +111,14 @@ const ImageGrid = () => {
         <div className="flex justify-end mb-2">
           <div className="flex space-x-2">
             <button 
-              className={`${!isGridView ? 'bg-indigo-600' : 'bg-zinc-900/80'} rounded-md p-1`}
+              className={`${!isGridView ? 'bg-indigo-600' : 'bg-zinc-900/80'} rounded-md p-1 transition-all duration-200 hover:scale-105`}
               onClick={toggleView}
               aria-label="Single view"
             >
               <Square className="w-5 h-5" />
             </button>
             <button 
-              className={`${isGridView ? 'bg-indigo-600' : 'bg-zinc-900/80'} rounded-md p-1`}
+              className={`${isGridView ? 'bg-indigo-600' : 'bg-zinc-900/80'} rounded-md p-1 transition-all duration-200 hover:scale-105`}
               onClick={toggleView}
               aria-label="Grid view"
             >
@@ -125,8 +129,12 @@ const ImageGrid = () => {
         
         {isGridView ? (
           // Grid view
-          <div className="grid grid-cols-2 gap-2 flex-grow relative">
-            {isLoading && <GenerationAnimation isLoading={isLoading} />}
+          <div className="grid grid-cols-2 gap-2 flex-grow relative transition-all duration-300 ease-in-out">
+            {isLoading && (
+              <div className="absolute inset-0 z-0">
+                <GenerationAnimation isLoading={isLoading} />
+              </div>
+            )}
             {images.length > 0 ? (
               images.map((image, index) => (
                 <div key={index} className="aspect-square overflow-hidden rounded-lg bg-zinc-900/80">
@@ -149,8 +157,12 @@ const ImageGrid = () => {
           </div>
         ) : (
           // Single image view
-          <div className="flex-grow relative">
-            {isLoading && <GenerationAnimation isLoading={isLoading} />}
+          <div className="flex-grow relative transition-all duration-300 ease-in-out">
+            {isLoading && (
+              <div className="absolute inset-0 z-0">
+                <GenerationAnimation isLoading={isLoading} />
+              </div>
+            )}
             {images.length > 0 ? (
               <div className="h-full rounded-lg bg-zinc-900/80 overflow-hidden">
                 <img 
@@ -193,3 +205,12 @@ const ImageGrid = () => {
 };
 
 export default ImageGrid;
+
+
+
+
+
+
+
+
+
